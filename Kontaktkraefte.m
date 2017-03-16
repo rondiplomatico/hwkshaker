@@ -16,15 +16,24 @@ activationDotsRelevant = activationDots(2:2:end);
 % Setup wie in Paper Figure
 [c,m] = ShakerDefaultFuerSim.createTestingConfig(95,3,timedotsActivation,activationDots,.3);
 m.T = 360;
+m.plotGeometrySetup;
 
 %% Simulation und Kraefte berechnen
 [t,y] = m.simulate;
 %
-% [df,nf] = m.getResidualForces(t,y);
+[df,nf] = m.getResidualForces(t,y);
+ 
+%% Save/Load
+% save('PaperFigure2Daten.mat');
+load('PaperFigure2Daten.mat');
 
-% m.plotGeometrySetup;
-% hold on
-% load('PaperFigure2Daten.mat');
+%% Paper Figure 1
+ax = m.plotActivation;
+y_bar = y(1005,:)-50-y(3,:);
+hold(ax,'on');
+plot(ax, m.Times, y_bar);
+axis(ax,'tight');
+
 %% Jede Zeile enthaelt Kraefte eines Knotens ueber die Zeit t
 xforces = zeros(50,length(t));
 yforces = zeros(50,length(t));
@@ -171,7 +180,7 @@ amplitudenMittelwerte = amplitudenMittelwerte(1:3);
 activations = activationDotsRelevant(1:3);
 
 %% Plot der Kräfte als Funktion der relativen Amplitude (Hysteresen)
-close all
+% close all
 % Jeder Abschnitt eine Cell
 legendliste = cell(8,1);
 plotliste = cell(8,1);
