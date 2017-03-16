@@ -1,0 +1,4 @@
+[submodule "kermor"]
+	path = kermor
+	url = https://github.com/KerMor/kermor
+	branch = HWKShaker
